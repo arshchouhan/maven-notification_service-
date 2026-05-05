@@ -58,6 +58,13 @@ jobs:
         with:
           driver: docker-container
 
+      - name: Set sanitized image name
+        run: |
+          RAW_NAME='${{ github.event.repository.name }}'
+          # lowercase, replace invalid chars with '-', strip trailing separators
+          SANITIZED=$(echo "$RAW_NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9._-]/-/g' | sed -E 's/[-._]+$//')
+          echo "IMAGE=${{ github.repository_owner }}/$SANITIZED" >> $GITHUB_ENV
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -86,13 +93,6 @@ jobs:
             -H "Authorization: Bearer ${RENDER_API_KEY}" \
             -H "Content-Type: application/json" \
             -d '{}' || true
-
-      - name: Set sanitized image name
-        run: |
-          RAW_NAME='${{ github.event.repository.name }}'
-          # lowercase, replace invalid chars with '-', strip trailing separators
-          SANITIZED=$(echo "$RAW_NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9._-]/-/g' | sed -E 's/[-._]+$//')
-          echo "IMAGE=${{ github.repository_owner }}/$SANITIZED" >> $GITHUB_ENV
 
 # Notes:
 # - To push to Docker Hub instead, replace the login and tags with Docker Hub values
