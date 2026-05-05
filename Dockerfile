@@ -6,9 +6,8 @@ WORKDIR /workspace
 ARG MAVEN_OPTS="-Xmx1024m"
 ENV MAVEN_OPTS=${MAVEN_OPTS}
 
-# Copy maven wrapper and pom first to leverage layer caching
-COPY pom.xml mvnw ./
-COPY .mvn .mvn
+# Copy pom.xml first to leverage layer caching
+COPY pom.xml ./
 
 # Fetch dependencies (cached layer)
 RUN mvn -B -ntp dependency:go-offline
