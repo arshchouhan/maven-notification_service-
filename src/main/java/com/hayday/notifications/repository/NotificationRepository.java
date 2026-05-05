@@ -1,0 +1,30 @@
+package com.hayday.notifications.repository;
+
+import com.hayday.notifications.model.NotificationDocument;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface NotificationRepository extends MongoRepository<NotificationDocument, String> {
+
+    Page<NotificationDocument> findByUser_idOrderByCreated_atDesc(String user_id, Pageable pageable);
+
+    List<NotificationDocument> findByUser_idAndStatusOrderByCreated_atDesc(String user_id, String status);
+
+    List<NotificationDocument> findByUser_idAndAnimal_idAndCategory(String user_id, String animal_id, String category);
+
+    Optional<NotificationDocument> findByDedup_key(String dedup_key);
+
+    long countByUser_idAndStatus(String user_id, String status);
+
+    long countByUser_idAndCategory(String user_id, String category);
+
+    @Query("{ 'user_id': ?0, 'status': { $ne: 'resolved' } }")
+    long countUnresolvedByUser_id(String user_id);
+}

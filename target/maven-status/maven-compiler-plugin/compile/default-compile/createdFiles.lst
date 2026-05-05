@@ -1,0 +1,11 @@
+com\hayday\notifications\model\NotificationListResponse$Meta.class
+com\hayday\notifications\config\NotificationSeedConfig.class
+com\hayday\notifications\service\NotificationService.class
+com\hayday\notifications\model\NotificationListResponse.class
+com\hayday\notifications\controller\NotificationController.class
+com\hayday\notifications\model\NotificationDocument.class
+com\hayday\notifications\model\ApiResponse.class
+com\hayday\notifications\model\CreateNotificationRequest.class
+com\hayday\notifications\NotificationsServiceApplication.class
+com\hayday\notifications\repository\NotificationRepository.class
+com\hayday\notifications\model\NotificationItem.class
