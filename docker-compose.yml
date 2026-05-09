@@ -1,0 +1,31 @@
+services:
+  mongo-atlas-check:
+    image: mongo:7
+    container_name: notifications-mongo-atlas-check
+    environment:
+      MONGODB_URI: ${MONGODB_URI}
+    command:
+      - sh
+      - -lc
+      - |
+        if [ -z "$MONGODB_URI" ]; then
+          echo "MONGODB_URI is not set" >&2
+          exit 1
+        fi
+
+        mongosh "$MONGODB_URI" --quiet --eval 'db.runCommand({ ping: 1 })' >/dev/null
+
+  notifications-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: notifications-service
+    depends_on:
+      mongo-atlas-check:
+        condition: service_completed_successfully
+    environment:
+      MONGODB_URI: ${MONGODB_URI}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-docker}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

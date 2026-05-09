@@ -20,6 +20,18 @@ mvn spring-boot:run
 
 The service runs on **port 8080**.
 
+## Docker Compose
+
+The service can be started with Docker Compose after you provide a MongoDB Atlas connection string in a local `.env` file.
+
+```bash
+copy .env.example .env
+# edit .env and replace MONGODB_URI with your Atlas connection string
+docker compose up --build
+```
+
+Compose runs a short Atlas ping container first. The notification service starts only if that ping succeeds.
+
 ## API
 
 All endpoints return JSON in the format expected by the React UI.

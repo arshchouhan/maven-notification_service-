@@ -1,3 +1,4 @@
+com\hayday\notifications\controller\HealthController.class
 com\hayday\notifications\model\NotificationListResponse$Meta.class
 com\hayday\notifications\config\NotificationSeedConfig.class
 com\hayday\notifications\service\NotificationService.class
