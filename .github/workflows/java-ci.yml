@@ -99,8 +99,22 @@ jobs:
           RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
-          if [ -z "$RENDER_SERVICE_ID" ] || [ -z "$RENDER_API_KEY" ]; then
-            echo "RENDER_SERVICE_ID or RENDER_API_KEY is not set" >&2
+          missing=0
+          if [ -z "$RENDER_SERVICE_ID" ]; then
+            echo "RENDER_SERVICE_ID is not set" >&2
+            missing=1
+          else
+            echo "RENDER_SERVICE_ID is set"
+          fi
+
+          if [ -z "$RENDER_API_KEY" ]; then
+            echo "RENDER_API_KEY is not set" >&2
+            missing=1
+          else
+            echo "RENDER_API_KEY is set"
+          fi
+
+          if [ "$missing" -eq 1 ]; then
             exit 1
           fi
 
