@@ -5,7 +5,8 @@ Minimal Spring Boot service for HayDay notifications. Implements the stable API 
 ## Run
 
 ### Prerequisites
-- Java 17+
+- Java 17+ 
+
 - MongoDB running locally (optional for development)
 
 ### Start
