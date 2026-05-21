@@ -12,23 +12,7 @@ services:
           echo "MONGODB_URI is not set" >&2
           exit 1
         fi
-
-        # Try pinging MongoDB up to 3 times using a short timeout so we fail fast
-        retries=3
-        delay=2
-        attempt=1
-        while [ "$attempt" -le "$retries" ]; do
-          if timeout 5s mongosh "$MONGODB_URI" --quiet --eval 'db.runCommand({ ping: 1 })' >/dev/null 2>&1; then
-            echo "Mongo ping succeeded"
-            exit 0
-          fi
-          echo "Mongo ping attempt $attempt failed; retrying in $delay seconds..."
-          attempt=$((attempt+1))
-          sleep $delay
-        done
-
-        echo "Mongo ping failed after $retries attempts" >&2
-        exit 1
+          mongosh "$MONGODB_URI" --quiet --eval 'db.adminCommand({ ping: 1 })' >/dev/null
 
   notifications-service:
     build:

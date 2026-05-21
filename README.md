@@ -31,7 +31,7 @@ copy .env.example .env
 docker compose up --build
 ```
 
-Compose runs a short Atlas ping container first. The notification service starts only if that ping succeeds.
+Compose runs a short MongoDB connectivity check first. The notification service starts only if the `mongosh` ping succeeds.
 
 ## API
 
